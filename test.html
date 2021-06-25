@@ -1,0 +1,131 @@
+<style>
+
+
+body{
+	
+	background-image:url("gradient.jpg");
+	/*Full height*/
+	height: 100%;
+		
+	/*center and scale the image nicely*/
+	background-position: center;
+	background-repeat: no-repeat;
+	background-size: cover;
+}
+
+#userInput{
+	margin-top: 20px;
+	padding: 10px;
+	text-align:center;
+	background-color:inherit;
+}
+
+#prompt{
+	vertical-align: middle;
+}
+
+#txtBox{
+	vertical-align:middle;
+}	
+
+#injected{
+	padding-left:10px;
+	font-size:16px;
+	color: White;
+	text-align: justify;
+	margin-top:5px;
+	background: rgba(0,0,0,0.5);
+	
+}
+	
+ #prompt {
+    
+    width: 18%;
+    font-size: 18px;
+    vertical-align: middle;
+    box-sizing: border-box;
+    background-color:black;
+    color: #ffffff;
+    border: none;
+    opacity: 0.5;
+  }
+
+  #txtBox {
+    width: auto;
+    font-size: 18px;
+    vertical-align: middle;
+    background-color: #000;
+    color: #f2f3ed;
+    border: none;
+    box-sizing: border-box;
+    opacity: 0.8;
+  }
+
+#DockerImage{
+	display:flex;
+	justify-content: center;
+	align-items: center;
+}
+
+</style>
+
+<Html>
+<meta name="viewport" content="width=device-width, initail-scale=1">
+<title>Docker WebApp</title>
+
+<body>
+<div id="DockerImage">
+	<img src="dockerlogo.gif">
+</div>
+
+
+
+
+
+<script>
+ 
+
+
+
+  // Main Function
+  function commandProcessor(e) {
+
+    //Check if the enter key is pressed
+    if (e.keyCode == 13) {
+
+     
+      document.getElementById('injected').innerHTML = "";
+      var i = document.getElementById("txtBox").value
+      var xhr = new XMLHttpRequest();
+      xhr.open("GET", "http://192.168.0.105/cgi-bin/docker.py?x=" + i, false)
+      xhr.send();
+      var output = xhr.responseText;
+      document.getElementById("injected").innerHTML = output;
+
+      //Clear input text box
+      document.getElementById('txtBox').value = "";
+    }
+  }
+
+</script>
+
+
+
+
+
+
+
+
+  
+  <div id="screen">
+    <div id="userInput">
+      <input type="text" value="root@Sachin:~$" id="prompt" size="28" readonly="readonly">
+      <input type="text" id="txtBox" onkeypress="commandProcessor(event)" placeholder="Enter your command" size="40"
+        autofocus>
+    </div>
+    <pre>
+    <div id="injected"></div>
+    </pre>
+  </div>
+</div>
+</body>
